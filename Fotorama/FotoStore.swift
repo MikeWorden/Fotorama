@@ -23,7 +23,13 @@ class FotoStore {
 			return URLSession(configuration: config)
 		}()
 	
+	func bronzeChallenge19 (response: HTTPURLResponse) {
+		print("URL:  \(String(describing:  response.url))")
+		print("Response Code:  \(String(describing: response.statusCode))")
+		print("HeaderFields:  \(String(describing:  response.allHeaderFields))")
+		
 	
+	}
 	
 	func fetchInterestingPhotos(completion: @escaping (Result<[Foto], Error>) -> Void)  {
 		
@@ -31,7 +37,10 @@ class FotoStore {
 		let request = URLRequest(url: url)
 		let task = session.dataTask(with: request) {
 			(data, response, error) in
-			print("Response:  \(String(describing: error))")
+			//print("Response:  \(String(describing: error))")
+			if let response = response as? HTTPURLResponse {
+				self.bronzeChallenge19(response: response)
+			}
 			let result = self.processPhotosRequest(data: data, error: error)
 			OperationQueue.main.addOperation {
 				completion(result)
