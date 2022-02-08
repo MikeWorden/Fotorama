@@ -72,13 +72,31 @@ struct FlickrAPI {
 		
 		let fotos: [Foto]
 		enum CodingKeys: String, CodingKey {
-				case fotos = "foto"
+				case fotos = "photo"
 
 		}
 	}
 
-	
+	static func fotos(fromJSON data: Data) -> Result<[Foto], Error> {
+		do {
+			let decoder = JSONDecoder()
+			
+			let dateFormatter = DateFormatter()
+			dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+			dateFormatter.locale = Locale(identifier: "en_US_POSIX")
+			dateFormatter.timeZone = TimeZone(secondsFromGMT: 0)
+			decoder.dateDecodingStrategy = .formatted(dateFormatter)
 
+			
+			let flickrResponse = try decoder.decode(FlickrResponse.self, from: data)
+			let photos = flickrResponse.fotosInfo.fotos.filter { $0.remoteURL != nil }
+					return .success(photos)
+
+		} catch {
+			return .failure(error)
+		}
+	}
+	
 }
 
 

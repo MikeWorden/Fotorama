@@ -18,6 +18,7 @@
 		0F33BDEA27A9CFC0005AD92F /* FotoramaUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F33BDE927A9CFC0005AD92F /* FotoramaUITestsLaunchTests.swift */; };
 		0F33BDF727A9D343005AD92F /* FlickerAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F33BDF627A9D343005AD92F /* FlickerAPI.swift */; };
 		0F33BDF927A9D57A005AD92F /* FotoStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F33BDF827A9D57A005AD92F /* FotoStore.swift */; };
+		0F33BDFB27AC6A51005AD92F /* Foto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F33BDFA27AC6A51005AD92F /* Foto.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +54,7 @@
 		0F33BDE927A9CFC0005AD92F /* FotoramaUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FotoramaUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		0F33BDF627A9D343005AD92F /* FlickerAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlickerAPI.swift; sourceTree = "<group>"; };
 		0F33BDF827A9D57A005AD92F /* FotoStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FotoStore.swift; sourceTree = "<group>"; };
+		0F33BDFA27AC6A51005AD92F /* Foto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Foto.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -107,6 +109,7 @@
 				0F33BDF827A9D57A005AD92F /* FotoStore.swift */,
 				0F33BDC827A9CFBF005AD92F /* SceneDelegate.swift */,
 				0F33BDCA27A9CFBF005AD92F /* FotosViewController.swift */,
+				0F33BDFA27AC6A51005AD92F /* Foto.swift */,
 				0F33BDCC27A9CFBF005AD92F /* Main.storyboard */,
 				0F33BDF627A9D343005AD92F /* FlickerAPI.swift */,
 				0F33BDCF27A9CFC0005AD92F /* Assets.xcassets */,
@@ -269,6 +272,7 @@
 				0F33BDC727A9CFBF005AD92F /* AppDelegate.swift in Sources */,
 				0F33BDF927A9D57A005AD92F /* FotoStore.swift in Sources */,
 				0F33BDC927A9CFBF005AD92F /* SceneDelegate.swift in Sources */,
+				0F33BDFB27AC6A51005AD92F /* Foto.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
