@@ -37,10 +37,26 @@ class FotoStore {
 		let request = URLRequest(url: url)
 		let task = session.dataTask(with: request) {
 			(data, response, error) in
-			//print("Response:  \(String(describing: error))")
 			if let response = response as? HTTPURLResponse {
 				self.bronzeChallenge19(response: response)
 			}
+			let result = self.processPhotosRequest(data: data, error: error)
+			OperationQueue.main.addOperation {
+				completion(result)
+			}
+		}
+		task.resume()
+	}
+	
+	func fetchRecentPhotos(completion: @escaping (Result<[Foto], Error>) -> Void)  {
+		
+		let url = FlickrAPI.recentPhotosURL
+		let request = URLRequest(url: url)
+		let task = session.dataTask(with: request) {
+			(data, response, error) in
+			/*if let response = response as? HTTPURLResponse {
+				self.bronzeChallenge19(response: response)
+			}*/
 			let result = self.processPhotosRequest(data: data, error: error)
 			OperationQueue.main.addOperation {
 				completion(result)
@@ -49,6 +65,7 @@ class FotoStore {
 		}
 		task.resume()
 	}
+	
 	private func processPhotosRequest(data: Data?,
 									  error: Error?) -> Result<[Foto], Error> {
 		guard let jsonData = data else {

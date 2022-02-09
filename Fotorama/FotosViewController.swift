@@ -16,7 +16,7 @@ class FotosViewController: UIViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
-		store.fetchInterestingPhotos {
+		store.fetchRecentPhotos {
 			(photosResult) in
 			
 			switch photosResult {
