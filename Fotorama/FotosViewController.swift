@@ -7,28 +7,40 @@
 
 import UIKit
 
-class FotosViewController: UIViewController {
+class FotosViewController: UIViewController, UICollectionViewDelegate {
 
 	
-	@IBOutlet private var imageView: UIImageView!
+	//@IBOutlet private var imageView: UIImageView!
+	@IBOutlet var collectionView: UICollectionView!
+	
 	var store: FotoStore!
-
+	let fotoDataSource = FotoDataSource()
+	
+	
+	
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
-		store.fetchRecentPhotos {
+		collectionView.dataSource = fotoDataSource
+		collectionView.delegate = self
+
+		
+		
+		store.fetchInterestingPhotos {
 			(photosResult) in
 			
 			switch photosResult {
 			case let .success(photos):
 				print("Successfully found \(photos.count) photos.")
-				if let firstPhoto = photos.first {
-					self.updateImageView(for: firstPhoto)
-				}
+				self.fotoDataSource.fotos = photos
 
 			case let .failure(error):
 				print("Error fetching interesting photos: \(error)")
+				self.fotoDataSource.fotos.removeAll()
 			}
+			self.collectionView.reloadSections(IndexSet(integer: 0))
+
+			
 			
 		}
 		
@@ -36,19 +48,31 @@ class FotosViewController: UIViewController {
 	}
 	
 	
-	func updateImageView(for foto: Foto) {
-		store.fetchImage(for: foto) {
-			(imageResult) in
-
-			switch imageResult {
-			case let .success(image):
-				self.imageView.image = image
-			case let .failure(error):
-				print("Error downloading image: \(error)")
+	func collectionView(_ collectionView: UICollectionView,
+						willDisplay cell: UICollectionViewCell,
+						forItemAt indexPath: IndexPath) {
+		
+		let foto = fotoDataSource.fotos[indexPath.row]
+		
+		// Download the image data, which could take some time
+		store.fetchImage(for: foto) { (result) -> Void in
+			
+			// The index path for the photo might have changed between the
+			// time the request started and finished, so find the most
+			// recent index path
+			guard let fotoIndex = self.fotoDataSource.fotos.firstIndex(of: foto),
+				  case let .success(image) = result else {
+					  return
+				  }
+			let fotoIndexPath = IndexPath(item: fotoIndex, section: 0)
+		
+			// When the request finishes, find the current cell for this photo
+			if let cell = self.collectionView.cellForItem(at: fotoIndexPath)
+				as? FotoCollectionViewCell {
+				cell.update(displaying: image)
 			}
 		}
 	}
-
 
 	
 	

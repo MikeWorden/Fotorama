@@ -22,3 +22,11 @@ class Foto: Codable {
 	}
 }
 
+extension Foto: Equatable {
+	static func == (lhs: Foto, rhs: Foto) -> Bool {
+		// Two Photos are the same if they have the same photoID
+		
+		return lhs.fotoID == rhs.fotoID
+	}
+}
+		 

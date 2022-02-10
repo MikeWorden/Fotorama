@@ -3,8 +3,8 @@
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19519"/>
-        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -12,26 +12,52 @@
         <scene sceneID="tne-QT-ifu">
             <objects>
                 <viewController id="BYZ-38-t0r" customClass="FotosViewController" customModule="Fotorama" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="MQ3-sb-Ca5">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="GXC-Rd-Trk">
-                                <rect key="frame" x="0.0" y="88" width="414" height="774"/>
-                            </imageView>
-                        </subviews>
-                        <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                        <constraints>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="GXC-Rd-Trk" secondAttribute="trailing" id="4YW-7Z-QLa"/>
-                            <constraint firstItem="GXC-Rd-Trk" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="L8y-sZ-kXI"/>
-                            <constraint firstItem="GXC-Rd-Trk" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="eZ7-f9-Jrr"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="GXC-Rd-Trk" secondAttribute="bottom" id="kCU-wl-TjM"/>
-                        </constraints>
-                    </view>
+                        <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="2" minimumInteritemSpacing="2" id="Ez4-uP-Nh1">
+                            <size key="itemSize" width="90" height="90"/>
+                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                            <inset key="sectionInset" minX="2" minY="2" maxX="2" maxY="2"/>
+                        </collectionViewFlowLayout>
+                        <cells>
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="FotoCollectionViewCell" id="UeH-Yb-ok1" customClass="FotoCollectionViewCell" customModule="Fotorama" customModuleProvider="target">
+                                <rect key="frame" x="2" y="2" width="90" height="90"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="krX-Ef-CoE">
+                                    <rect key="frame" x="0.0" y="0.0" width="90" height="90"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="bHG-X8-J0f">
+                                            <rect key="frame" x="0.0" y="0.0" width="90" height="90"/>
+                                        </imageView>
+                                        <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="BaC-4R-ra2">
+                                            <rect key="frame" x="35" y="35" width="20" height="20"/>
+                                            <color key="color" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </activityIndicatorView>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstAttribute="bottom" secondItem="bHG-X8-J0f" secondAttribute="bottom" id="4Z6-ld-b3V"/>
+                                        <constraint firstItem="BaC-4R-ra2" firstAttribute="centerY" secondItem="krX-Ef-CoE" secondAttribute="centerY" id="4r8-2Q-2cc"/>
+                                        <constraint firstItem="bHG-X8-J0f" firstAttribute="top" secondItem="krX-Ef-CoE" secondAttribute="top" id="5P1-gc-4vs"/>
+                                        <constraint firstItem="bHG-X8-J0f" firstAttribute="leading" secondItem="krX-Ef-CoE" secondAttribute="leading" id="Y39-WO-9h1"/>
+                                        <constraint firstAttribute="trailing" secondItem="bHG-X8-J0f" secondAttribute="trailing" id="hdc-b3-ZXj"/>
+                                        <constraint firstItem="BaC-4R-ra2" firstAttribute="centerX" secondItem="krX-Ef-CoE" secondAttribute="centerX" id="wa1-0L-OnX"/>
+                                    </constraints>
+                                </collectionViewCellContentView>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <connections>
+                                    <outlet property="imageView" destination="bHG-X8-J0f" id="Iml-ia-AU9"/>
+                                    <outlet property="spinner" destination="BaC-4R-ra2" id="mLM-Bz-w1B"/>
+                                </connections>
+                            </collectionViewCell>
+                        </cells>
+                    </collectionView>
                     <navigationItem key="navigationItem" title="Fotorama" id="tyf-p8-zaL"/>
                     <connections>
-                        <outlet property="imageView" destination="GXC-Rd-Trk" id="43Y-p8-is2"/>
+                        <outlet property="collectionView" destination="MQ3-sb-Ca5" id="cdr-jQ-ney"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
