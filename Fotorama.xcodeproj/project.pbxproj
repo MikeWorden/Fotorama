@@ -21,6 +21,7 @@
 		0F33BDFB27AC6A51005AD92F /* Foto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F33BDFA27AC6A51005AD92F /* Foto.swift */; };
 		0F33BDFD27B35781005AD92F /* FotoDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F33BDFC27B35781005AD92F /* FotoDataSource.swift */; };
 		0F33BDFF27B5BCB8005AD92F /* FotoCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F33BDFE27B5BCB8005AD92F /* FotoCollectionViewCell.swift */; };
+		0F33BE0327B5C934005AD92F /* Image-Store.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F33BE0227B5C934005AD92F /* Image-Store.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -59,6 +60,7 @@
 		0F33BDFA27AC6A51005AD92F /* Foto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Foto.swift; sourceTree = "<group>"; };
 		0F33BDFC27B35781005AD92F /* FotoDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FotoDataSource.swift; sourceTree = "<group>"; };
 		0F33BDFE27B5BCB8005AD92F /* FotoCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FotoCollectionViewCell.swift; sourceTree = "<group>"; };
+		0F33BE0227B5C934005AD92F /* Image-Store.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Image-Store.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -114,6 +116,7 @@
 				0F33BDC827A9CFBF005AD92F /* SceneDelegate.swift */,
 				0F33BDCA27A9CFBF005AD92F /* FotosViewController.swift */,
 				0F33BDFE27B5BCB8005AD92F /* FotoCollectionViewCell.swift */,
+				0F33BE0227B5C934005AD92F /* Image-Store.swift */,
 				0F33BDFA27AC6A51005AD92F /* Foto.swift */,
 				0F33BDCC27A9CFBF005AD92F /* Main.storyboard */,
 				0F33BDFC27B35781005AD92F /* FotoDataSource.swift */,
@@ -278,6 +281,7 @@
 				0F33BDF727A9D343005AD92F /* FlickerAPI.swift in Sources */,
 				0F33BDC727A9CFBF005AD92F /* AppDelegate.swift in Sources */,
 				0F33BDF927A9D57A005AD92F /* FotoStore.swift in Sources */,
+				0F33BE0327B5C934005AD92F /* Image-Store.swift in Sources */,
 				0F33BDC927A9CFBF005AD92F /* SceneDelegate.swift in Sources */,
 				0F33BDFF27B5BCB8005AD92F /* FotoCollectionViewCell.swift in Sources */,
 				0F33BDFB27AC6A51005AD92F /* Foto.swift in Sources */,
