@@ -17,6 +17,8 @@ enum PhotoError: Error {
 
 class FotoStore {
 	
+	let imageStore = ImageStore()
+	
 	
 	private let session: URLSession = {
 			let config = URLSessionConfiguration.default
@@ -99,6 +101,16 @@ class FotoStore {
 
 	func fetchImage(for foto: Foto,
 					completion: @escaping (Result<UIImage, Error>) -> Void) {
+		
+		
+		let fotoKey = foto.fotoID
+		if let image = imageStore.image(forKey: fotoKey) {
+			OperationQueue.main.addOperation {
+				completion(.success(image))
+			}
+			return
+		}
+
 		guard let photoURL = foto.remoteURL else {
 			completion(.failure(PhotoError.missingImageURL))
 			return
@@ -107,7 +119,13 @@ class FotoStore {
 		
 		let task = session.dataTask(with: request) {
 			(data, response, error) in
+			
 			let result = self.processImageRequest(data: data, error: error)
+			
+			if case let .success(image) = result {
+				self.imageStore.setImage(image, forKey: fotoKey)
+			}
+			
 			OperationQueue.main.addOperation {
 				completion(result)
 			}

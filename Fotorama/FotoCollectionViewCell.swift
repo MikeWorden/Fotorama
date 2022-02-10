@@ -18,6 +18,7 @@ class FotoCollectionViewCell: UICollectionViewCell {
 		if let imageToDisplay = image {
 			spinner.stopAnimating()
 			imageView.image = imageToDisplay
+			
 		} else {
 			spinner.startAnimating()
 			imageView.image = nil
