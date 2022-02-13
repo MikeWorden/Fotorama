@@ -26,7 +26,7 @@ class FotosViewController: UIViewController, UICollectionViewDelegate {
 
 		
 		
-		store.fetchInterestingPhotos {
+		store.fetchInterestingPhotos{
 			(photosResult) in
 			
 			switch photosResult {
@@ -71,6 +71,23 @@ class FotosViewController: UIViewController, UICollectionViewDelegate {
 				as? FotoCollectionViewCell {
 				cell.update(displaying: image)
 			}
+		}
+	}
+
+	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+		switch segue.identifier {
+		case "showFoto":
+			if let selectedIndexPath =
+				collectionView.indexPathsForSelectedItems?.first {
+				
+				let foto = fotoDataSource.fotos[selectedIndexPath.row]
+				
+				let destinationVC = segue.destination as! FotoInfoViewController
+				destinationVC.foto = foto
+				destinationVC.store = store
+			}
+		default:
+			preconditionFailure("Unexpected segue identifier.")
 		}
 	}
 
