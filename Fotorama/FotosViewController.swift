@@ -47,6 +47,20 @@ class FotosViewController: UIViewController, UICollectionViewDelegate {
 		
 	}
 	
+	override func viewDidLayoutSubviews() {
+		super.viewDidLayoutSubviews()
+		print("ViewDidLayoutSubviews called")
+		if let layout = self.collectionView.collectionViewLayout as? UICollectionViewFlowLayout {
+			let availableWidth = self.collectionView.bounds.inset(by: collectionView.layoutMargins).width
+			let maxNumColumns = 4
+			let cellWidth = (availableWidth / CGFloat(maxNumColumns)).rounded(.down)
+			let cellHeight = cellWidth
+			layout.itemSize = CGSize(width: cellWidth, height: cellHeight)
+			
+		}
+	}
+	
+	
 	
 	func collectionView(_ collectionView: UICollectionView,
 						willDisplay cell: UICollectionViewCell,
@@ -75,6 +89,9 @@ class FotosViewController: UIViewController, UICollectionViewDelegate {
 	}
 
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+		if let layout = self.collectionView.collectionViewLayout as? UICollectionViewLayout {
+			layout.invalidateLayout()
+		}
 		switch segue.identifier {
 		case "showFoto":
 			if let selectedIndexPath =
