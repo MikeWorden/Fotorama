@@ -52,7 +52,16 @@ class FotoStore {
 			if let response = response as? HTTPURLResponse {
 				self.bronzeChallenge19(response: response)
 			}
-			let result = self.processPhotosRequest(data: data, error: error)
+			var result = self.processFotosRequest(data: data, error: error)
+			if case .success = result {
+				do {
+					try self.persistentContainer.viewContext.save()
+				} catch {
+					result = .failure(error)
+				}
+			}
+
+
 			OperationQueue.main.addOperation {
 				completion(result)
 			}
@@ -66,19 +75,46 @@ class FotoStore {
 		let request = URLRequest(url: url)
 		let task = session.dataTask(with: request) {
 			(data, response, error) in
-			/*if let response = response as? HTTPURLResponse {
-				self.bronzeChallenge19(response: response)
-			}*/
-			let result = self.processPhotosRequest(data: data, error: error)
+
+			
+			var result = self.processFotosRequest(data: data, error: error)
+			if case .success = result {
+				do {
+					try self.persistentContainer.viewContext.save()
+				} catch {
+					result = .failure(error)
+				}
+			}
+
+
 			OperationQueue.main.addOperation {
 				completion(result)
 			}
-			
 		}
 		task.resume()
 	}
 	
-	private func processPhotosRequest(data: Data?,
+	
+	func fetchAllPhotos(completion: @escaping (Result<[Foto], Error>) -> Void) {
+		let fetchRequest: NSFetchRequest<Foto> = Foto.fetchRequest()
+		let sortByDateTaken = NSSortDescriptor(key: #keyPath(Foto.dateTaken),
+											   ascending: true)
+		fetchRequest.sortDescriptors = [sortByDateTaken]
+
+		let viewContext = persistentContainer.viewContext
+		viewContext.perform {
+			do {
+				let allPhotos = try viewContext.fetch(fetchRequest)
+				completion(.success(allPhotos))
+			} catch {
+				completion(.failure(error))
+			}
+		}
+	}
+
+	
+	
+	private func processFotosRequest(data: Data?,
 									  error: Error?) -> Result<[Foto], Error> {
 		guard let jsonData = data else {
 			return .failure(error!)
@@ -89,6 +125,21 @@ class FotoStore {
 		switch FlickrAPI.fotos(fromJSON: jsonData) {
 		case let .success(flickrPhotos):
 			let fotos = flickrPhotos.map { flickrPhoto -> Foto in
+				
+				let fetchRequest: NSFetchRequest<Foto> = Foto.fetchRequest()
+				let predicate = NSPredicate(
+					format: "\(#keyPath(Foto.fotoID)) == \(flickrPhoto.fotoID)"
+				)
+				fetchRequest.predicate = predicate
+				var fetchedFotos: [Foto]?
+				context.performAndWait {
+					fetchedFotos = try? fetchRequest.execute()
+				}
+				if let existingFoto = fetchedFotos?.first {
+					return existingFoto
+				}
+				
+				
 				var foto: Foto!
 				context.performAndWait {
 					foto = Foto(context: context)
