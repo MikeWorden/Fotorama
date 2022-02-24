@@ -49,7 +49,7 @@ class FotosViewController: UIViewController, UICollectionViewDelegate {
 	
 	override func viewDidLayoutSubviews() {
 		super.viewDidLayoutSubviews()
-		print("ViewDidLayoutSubviews called")
+		
 		if let layout = self.collectionView.collectionViewLayout as? UICollectionViewFlowLayout {
 			let availableWidth = self.collectionView.bounds.inset(by: collectionView.layoutMargins).width
 			let maxNumColumns = 4

@@ -76,14 +76,14 @@ struct FlickrAPI {
 	struct FlickrPhotosResponse: Codable {
 		
 		
-		let fotos: [Foto]
+		let fotos: [FlickrFoto]
 		enum CodingKeys: String, CodingKey {
 				case fotos = "photo"
 
 		}
 	}
 
-	static func fotos(fromJSON data: Data) -> Result<[Foto], Error> {
+	static func fotos(fromJSON data: Data) -> Result<[FlickrFoto], Error> {
 		do {
 			let decoder = JSONDecoder()
 			

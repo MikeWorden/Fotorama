@@ -7,6 +7,7 @@
 
 
 import UIKit
+import CoreData
 
 enum PhotoError: Error {
 	case imageCreationError
@@ -19,7 +20,16 @@ class FotoStore {
 	
 	let imageStore = ImageStore()
 	
-	
+	let persistentContainer: NSPersistentContainer = {
+			let container = NSPersistentContainer(name: "Fotorama")
+			container.loadPersistentStores { (description, error) in
+				if let error = error {
+					print("Error setting up Core Data (\(error)).")
+				}
+			}
+			return container
+		}()
+
 	private let session: URLSession = {
 			let config = URLSessionConfiguration.default
 			return URLSession(configuration: config)
@@ -74,7 +84,26 @@ class FotoStore {
 			return .failure(error!)
 		}
 		
-		return FlickrAPI.fotos(fromJSON: jsonData)
+		let context = persistentContainer.viewContext
+		
+		switch FlickrAPI.fotos(fromJSON: jsonData) {
+		case let .success(flickrPhotos):
+			let fotos = flickrPhotos.map { flickrPhoto -> Foto in
+				var foto: Foto!
+				context.performAndWait {
+					foto = Foto(context: context)
+					foto.title = flickrPhoto.title
+					foto.fotoID = flickrPhoto.fotoID
+					foto.remoteURL = flickrPhoto.remoteURL
+					foto.dateTaken = flickrPhoto.dateTaken
+				}
+				return foto
+			}
+			return .success(fotos)
+		case let .failure(error):
+			return .failure(error)
+		}
+		
 	}
 
 	
@@ -103,7 +132,9 @@ class FotoStore {
 					completion: @escaping (Result<UIImage, Error>) -> Void) {
 		
 		
-		let fotoKey = foto.fotoID
+		guard let fotoKey = foto.fotoID else {
+			preconditionFailure("Foto expected to have a FotoID")
+		}
 		if let image = imageStore.image(forKey: fotoKey) {
 			OperationQueue.main.addOperation {
 				completion(.success(image))
