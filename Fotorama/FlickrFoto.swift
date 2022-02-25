@@ -13,12 +13,14 @@ class FlickrFoto: Codable {
 	let remoteURL: URL?
 	let fotoID: String
 	let dateTaken: Date
+	
 
 	enum CodingKeys: String, CodingKey {
 		case title
 		case remoteURL = "url_z"
 		case fotoID = "id"
 		case dateTaken = "datetaken"
+
 	}
 }
 

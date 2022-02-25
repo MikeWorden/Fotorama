@@ -79,9 +79,7 @@ class FotosViewController: UIViewController, UICollectionViewDelegate {
 	}
 
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-		if let layout = self.collectionView.collectionViewLayout as? UICollectionViewLayout {
-			layout.invalidateLayout()
-		}
+
 		switch segue.identifier {
 		case "showFoto":
 			if let selectedIndexPath =
